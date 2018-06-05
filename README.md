@@ -6,3 +6,4 @@ Contributors:
 * Scott Baker
 
 Folders:
+* Jupyter
