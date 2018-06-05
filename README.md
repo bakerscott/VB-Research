@@ -8,8 +8,7 @@ Contributors:
 Folders:
 * Jupyter
 
-asdflkajsdfojsadfj
-kliashdflj
-alsdfjalsdfj
-lasjflsadjf
-alsdfj
+
+
+let's test the merge conflict stuff and get Crossland up to date with vim commands
+
