@@ -8,8 +8,3 @@ Contributors:
 Folders:
 * Jupyter
 * Python
-
-
-let's test the merge conflict stuff and get Crossland up to date with vim commands
-
-stuff
