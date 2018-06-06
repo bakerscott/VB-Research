@@ -18,7 +18,7 @@ Summer work for a volleyball video tracking project with Dr. David Knox at Unive
 * Read all of the articles in the folder
 * (s) get old code "running"/understood
 * (s) calendar with "work hours" and schedule and share it
-* (s) "dig" for more articles (max 1 hr)
+* (s) manually work with an image to get "accurate height"
 
 # Log:
 
