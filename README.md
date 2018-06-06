@@ -7,7 +7,6 @@ Summer work for a volleyball video tracking project with Dr. David Knox at Unive
 
 # Folders:
 * Jupyter
-* Python
 
 # Goals:
 * Write a paper
@@ -15,13 +14,32 @@ Summer work for a volleyball video tracking project with Dr. David Knox at Unive
 * Gain experience in Jupyter, Python, OpenCV, TensorFlow(?), Teletype Atom, etc.
 
 # Action Items:
-* OpenCV book
-* (c) update Jupter Notebook with OpenCV packages --- git commit practice
+* [IMPORTANT] create a "summer Requirements and Questions proposal" --- due Friday 1pm Knox
 * Read all of the articles in the folder
 * (s) get old code "running"/understood
-* create a "summer Requirements and Questions proposal" --- due Friday 1pm Knox  
 * (s) calendar with "work hours" and schedule and share it
 * (s) "dig" for more articles (max 1 hr)
+
+# Log:
+
+#### Wed. 6/6:
+* Read/Found article on getting height measurements from a video using "minimal calibration" (no dual-image)
+  * Process found in article needs to be tested to see "centimeter accuracy"
+* Propose (?) two parts to processing a "hit/play" video IF accurate:
+  * height/distance detection based on gym "lines" and a fixed (standard) pole height
+    * use image classification of image elements
+    * algorithm for:
+      * player height
+      * ball height
+  * track ball over multiple frames for a "trajectory"
+* Steps:
+  * manually get "height measurement algorithm" to work on an image (by hand) and assess accuracy
+  * implement with OpenCV libraries to put height on player and/or volleyball
+  * explore the "ball trajectory" tracking and overlay with height calculations
+
+#### Tues. 6/5:
+* Outline plan for week -- revloves around proposal
+* Worked with Crossland on GitHub familiarity
 
 
 # Notes:
