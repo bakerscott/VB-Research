@@ -1,26 +1,38 @@
 # VB-Research
 Summer work for a volleyball video tracking project with Dr. David Knox at University of Colorado, Boulder
 
-# Contributors:
+### Contributors:
 * Crossland Beer
 * Scott Baker
 
-# Folders:
-* Jupyter
+### Folders:
+* Jupyter -- Contains official lab notebook and other assorted workbooks
+* Information -- Contains updated version of project proposal, requirements, and schedule
 
-# Goals:
-* Write a paper
-* Learn/master GitHub
-* Gain experience in Jupyter, Python, OpenCV, TensorFlow(?), Teletype Atom, etc.
-
-# Action Items:
+## Action Items:
 * [IMPORTANT] create a "summer Requirements and Questions proposal" --- due Friday 1pm Knox
 * Read all of the articles in the folder
 * (s) get old code "running"/understood
 * (s) calendar with "work hours" and schedule and share it
 * (s) manually work with an image to get "accurate height"
 
-# Log:
+## Log:
+
+#### Thu. 6/7:
+* Scott and Crossland worked on the official project requirements and questions proposal -- to be submitted 6/8 1pm to Knox
+  * Included:
+    * Main questions to answer
+    * Requirements and preliminary restrictions
+    * Additional questions that could be answered through research
+    * General weekly calendar with notable events and primary objectives
+* Scott worked on Req. 1.1, a by-hand calculation of distance from fixed-frame single lens image
+  * Successful in calculating a distance based on pixel length of a reference vs. actual objects
+  * Shortcomings:
+    * Initially, this algorithm requires that the base of the object-of-interest be coplanar with the reference object.
+      * This is an issue because if we are measuring how high a player jumps, the player at max-height will not be on the same plane as the base of the pole (reference object)
+    * Further research will be done to see the viability of a non-coplanar comparison
+  * After mastering OpenCV, this hand-calculation will be done with an image of a player to test centimeter accuracy
+  * More research should be done with using a standard (from initial calculation) Homography mapping of the 2-D image to 3-D space.
 
 #### Wed. 6/6:
 * Read/Found article on getting height measurements from a video using "minimal calibration" (no dual-image)
@@ -38,11 +50,12 @@ Summer work for a volleyball video tracking project with Dr. David Knox at Unive
   * explore the "ball trajectory" tracking and overlay with height calculations
 
 #### Tues. 6/5:
-* Outline plan for week -- revloves around proposal
+* Outline plan for week -- revolves around proposal
 * Worked with Crossland on GitHub familiarity
 
 
 # Notes:
+This section can be deleted after acceptance of the project proposal.
 
 ## Questions:
 * What elements of previous work can be used?
