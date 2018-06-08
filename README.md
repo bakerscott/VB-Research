@@ -10,13 +10,21 @@ Summer work for a volleyball video tracking project with Dr. David Knox at Unive
 * Information -- Contains updated version of project proposal, requirements, and schedule
 
 ## Action Items:
-* [IMPORTANT] create a "summer Requirements and Questions proposal" --- due Friday 1pm Knox
+* [MAIN] assess viability of single lens camera accuracy
 * Read all of the articles in the folder
 * (s) get old code "running"/understood
-* (s) calendar with "work hours" and schedule and share it
 * (s) manually work with an image to get "accurate height"
 
 ## Log:
+
+#### Fri. 6/8:
+* Meeting at 1pm with Knox to discuss proposal
+  * updated requirements and questions added by Crossland to the `Summer-Work-Proposal-v2.pdf` in the `Information` folder
+  * goal for next week: accuracy of a single lens fixed frame camera -- hand and computer calculation
+* Scott: worked with basic OpenCV functionality regarding filters and identifiers
+
+* Still researching descrepancies in the height of a player relative to a known object when the player is in a "jumping frame"
+  * possible fix/estimate: use the trajectory or dimensional pixel variances of things we know (court lines)
 
 #### Thu. 6/7:
 * Scott and Crossland worked on the official project requirements and questions proposal -- to be submitted 6/8 1pm to Knox
