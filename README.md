@@ -17,6 +17,19 @@ Summer work for a volleyball video tracking project with Dr. David Knox at Unive
 
 ## Log:
 
+#### Mon. 6/11:
+* Crossland: work on camera-to-object distance accuracy calculations.
+  * significant error initially
+  * upon discussion and further research, experiments will have to be re-done in order to test proposed improved accuracy.
+* Meeting with Knox:
+  * weekly discussion of progress
+    * big decision point with regard to accuracy of single lens frame: END OF WEEK
+    * also discussed the "object identifiers" element to tracking, briefly
+* Scott: work on "perspective geometrics" of a 2D picture (and plane) to a 3D space.
+  * potential code and software that could give "CNN based" depths for fixed frame single photos
+    * investigation of this as a potential approach should be done tomorrow
+
+
 #### Fri. 6/8:
 * Meeting at 1pm with Knox to discuss proposal
   * updated requirements and questions added by Crossland to the `Summer-Work-Proposal-v2.pdf` in the `Information` folder
