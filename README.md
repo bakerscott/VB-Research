@@ -11,11 +11,33 @@ Summer work for a volleyball video tracking project with Dr. David Knox at Unive
 
 ## Action Items:
 * [MAIN] assess viability of single lens camera accuracy
-* Read all of the articles in the folder
 * (s) get old code "running"/understood
 * (s) manually work with an image to get "accurate height"
 
 ## Log:
+
+#### Thu. 6/14:
+* Scott: work on accuracy of perspective geometrics algorithm:
+  * Results can be found in the `Scott-Notes.ipynb` file in the `Jupyter` folder.
+    * `6.3%` error is too large on a `39 in` object.
+    * Possible improvements:
+      * make sure that all values are kept as long as possible (floats)
+      * get a higher resolution image (one used, in the `Scott-Notes` folder, is `1280x960`)
+
+#### Wed. 6/13:
+* Scott and Crossland:
+  * Went to the ITLL to get more accurate measurements to do a calculation for distance from object to camera knowing the size of the object.
+  * results varied drastically:
+    * potential incorrect FocalLength or SensorSize values of each of our cameras
+    * original equation could be incorrect, however it is found on multiple websites
+
+
+#### Tues. 6/12:
+* Scott: further reading on perspective geometry:
+  * Criminisi et Al. "Single View Metrology" gives details on their reconstruction of a 3D scene with only 2D details
+  * Explored the options of using Godard et Al. monodepth CNN of finding depths in images
+  * Question at large: are either of these techniques accurate enough for us?
+
 
 #### Mon. 6/11:
 * Crossland: work on camera-to-object distance accuracy calculations.
