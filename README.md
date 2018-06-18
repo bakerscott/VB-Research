@@ -8,6 +8,7 @@ Summer work for a volleyball video tracking project with Dr. David Knox at Unive
 ### Folders:
 * Jupyter -- Contains official lab notebook and other assorted workbooks
 * Information -- Contains updated version of project proposal, requirements, and schedule
+* Scott-Notes -- Contains "workshop" material used for testing
 
 ## Action Items:
 * [MAIN] assess viability of single lens camera accuracy
@@ -15,6 +16,29 @@ Summer work for a volleyball video tracking project with Dr. David Knox at Unive
 * (s) manually work with an image to get "accurate height"
 
 ## Log:
+
+#### Sat. 6/16:
+* Potential improvements on second test:
+  * Use "all" of the lines that go to the "vanishing point" to come up with a better "average vanishing point"
+* Decision point Mon. 6/18:
+  * Do we want to test other ways to make this more optimal?
+  -- or --
+  * Do we proceed to "consider" dual lens cameras in order to move to further requirements outlined in the project?
+  * Do we look into using CNN from previous work to classify depths of single-frame images?
+
+
+#### Fri. 6/15:
+* Scott: ran a second test with perspective geometrics on a higher resolution photo:
+  * This photo can be found `Scott-Notes/Second-Accuracy-Test-fit.png`
+  * Results:
+    * Resolution on image: `4032x3024`
+    * Measured distance: `24.25in`
+    * Calculated distance: `23.967in`
+    * Error: `1.165%`
+    * Error (cm): `-0.7179 cm`
+
+
+
 
 #### Thu. 6/14:
 * Scott: work on accuracy of perspective geometrics algorithm:
