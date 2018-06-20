@@ -17,6 +17,28 @@ Summer work for a volleyball video tracking project with Dr. David Knox at Unive
 
 ## Log:
 
+#### Tues. 6/19:
+* Scott: Began the class framework:
+  * `Clip`: the functionality to:
+    * import a clip, separate it into frames
+    * do full-clip processing
+  * `StillFrame`, a single frame in a clip:
+    * able to do height calculating processing on each frame 
+    * handle each frame individually (processing)
+
+
+#### Mon. 6/18:
+* Meeting with Knox:
+  * Discussed the single-frame perspective geometry
+
+  * Talked about the action items for this week:
+    * develop functionality for:
+      * Filtering out background vs. foreground (CB)
+      * Finding the vanishing lines (SB)
+      * Calculating heights (SB)
+      * Locating the "best" vanishing points
+
+
 #### Sat. 6/16:
 * Potential improvements on second test:
   * Use "all" of the lines that go to the "vanishing point" to come up with a better "average vanishing point"
@@ -31,7 +53,7 @@ Summer work for a volleyball video tracking project with Dr. David Knox at Unive
 * Scott: ran a second test with perspective geometrics on a higher resolution photo:
   * This photo can be found `Scott-Notes/Second-Accuracy-Test-fit.png`
   * Results:
-    * Resolution on image: `4032x3024`
+    * Resolution on image: `4032x3024s`
     * Measured distance: `24.25in`
     * Calculated distance: `23.967in`
     * Error: `1.165%`
