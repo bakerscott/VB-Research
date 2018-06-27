@@ -17,13 +17,30 @@ Summer work for a volleyball video tracking project with Dr. David Knox at Unive
 
 ## Log:
 
+#### Mon. 6/25:
+* Meeting with knox:
+  * Demonstrate filter work CB has done
+  * Talk about our organization/class structure
+  * Mention we want to train a tensorflow vector to identify volleyballs in the image
+
+
+#### Fri 6/22 / Sat. 6/23:
+* Developing framework for class structure
+  * Adding functions from Crossland's notes work
+
+
+#### Wed. 6/20 / Thu. 6/21:
+* Scott and Crossland meeting:
+  * Viability of using TensorFlow to do object identification, specifically for the volleyball
+  * Troubleshooting issues with video playback in jupyter notebooks
+
 #### Tues. 6/19:
 * Scott: Began the class framework:
   * `Clip`: the functionality to:
     * import a clip, separate it into frames
     * do full-clip processing
   * `StillFrame`, a single frame in a clip:
-    * able to do height calculating processing on each frame 
+    * able to do height calculating processing on each frame
     * handle each frame individually (processing)
 
 
