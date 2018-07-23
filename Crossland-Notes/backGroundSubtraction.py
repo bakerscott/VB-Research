@@ -109,11 +109,7 @@ def foregroundOnly(videoName):
 	cv2.destroyAllWindows()
 	
 	return backSubList
-	
-'''
-def processEdges(frame):
-	return cv2.Canny(frame, 200, 200)
-'''
+
 				
 def recolorize(colorFrames, noBackFrames):
 	
@@ -147,25 +143,6 @@ def recolorize(colorFrames, noBackFrames):
 		
 	return colorFrames
 	
-'''
-def recolorize2(vidName):
-	cap = cv2.VideoCapture(vidName)
-	fgbg = cv2.createBackgroundSubtractorMOG2()
-	
-	while True:
-		ret, frame = cap.read()
-		fgmask = fgbg.apply(frame)
-		
-		cv2.imshow("original", frame)
-		cv2.imshow("Mask", fgmask)
-		
-		k = cv2.waitKey(30) & 0xff
-		if k == 27:
-			break
-			
-	cap.release()
-	cv2.destroyAllWindows()
-'''
 
 def backgroundOnly(colorFrames, noBackFrames):
 	
@@ -291,85 +268,122 @@ def internetBackgroundImage(vidName, alpha, showResult = False):
 	cv2.destroyAllWindows()	
 
 
-def robustBackgroundFinder(vidName):
-	'''The purpose of this function is to have a one stop shop for finding the background of an image.  I wanted to write function components in this function, and then 
+def robustBackgroundFinder(vidName, extension):
+	'''
+	The purpose of this function is to have a one stop shop for finding the background of an image.  I wanted to write function components in this function, and then 
 	eventually expand them into several different functions.
 	
 	Parameters:
 	vidName = Name of the video from which you wish to get the background!
+	extension = The .extension of the video (.mp4, .avi, etc)
+	
+	Returns:
+	colorFrameList = A list of the frames of the video, unedited, in color.
+	grayFrameList = A list of the frames of the video, made gray.
+	fgColorList = A list of all the color frames, with the background made black.
+	blackAndWhiteForegroundOnly = A foreground only video, where the moving parts are white or gray and the background is black.
 	'''
 	
-	cap = cv2.VideoCapture(vidName)
-	vidLength = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+	#Loading the Video into the program, naming it cap.
+	cap = cv2.VideoCapture(vidName + extension)
+	vidLength = int(cap.get(cv2.CAP_PROP_FRAME_COUNT)) #establishing the video length, to be used later.
 	
+	#creating the kernel and mask for the background subtractor.
 	kernelColor = cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(3,3))
 	fgbgColor = cv2.createBackgroundSubtractorMOG2()
 	
 	kernelGray = cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(3,3))
 	fgbgGray = cv2.createBackgroundSubtractorMOG2()
 	
+	#Creating 4 lists, to be returned after manipulation.
 	colorFrameList = []
 	grayFrameList = []
 	fgColorList = []
 	fgGrayList = []
-	bgColorList = []
-	bgGrayList = []
+	blackAndWhiteForegroundOnly = []
 	
 	
+	#This loop is used to go through the length of the video, and add every frame to the colorFrame list.
 	for i in range(vidLength):
 		_, frame = cap.read()
 		colorFrameList.append(frame)
 		
+		#This section turns the color frames gray and adds them to grayFrameList
 		grayFrame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 		grayFrameList.append(grayFrame)
 		
+		#This applies our foreground mask, generating a black and white video, where the background is black, and the foreground is white.
 		fgmaskColor = fgbgColor.apply(frame)
 		fgmaskColor = cv2.morphologyEx(fgmaskColor, cv2.MORPH_OPEN, kernelColor)
 		
 		fgmaskGray = fgbgGray.apply(grayFrame)
 		fgmaskGray = cv2.morphologyEx(fgmaskGray, cv2.MORPH_OPEN, kernelGray)
 		
-		fgColorList.append(fgmaskColor)
 		fgGrayList.append(fgmaskGray)
 		
-	recolorizedColorFG = colorFrameList
-	recolorizedGrayFG = grayFrameList
+		blackAndWhiteForegroundOnly.append(fgmaskColor)
+		
+	#This creates the output writer for the video with a colored foreground and a black background.
+	fourcc = cv2.VideoWriter_fourcc(*'XVID')
+	out = cv2.VideoWriter('{}-blackBack{}'.format(vidName, extension),fourcc, 10.0, (1440, 1080))
 	
+	print "***Beginning process of creating foreground only video***"
+	
+	#This loop is used to create a video where the background is black, but the player and other moving parts are colored.
+	fgColorList = colorFrameList
+	for i in range(len(blackAndWhiteForegroundOnly)):
+		print "Generating frame {} of {}-blackBack.mp4".format(i, vidName)
+		for j in range(len(blackAndWhiteForegroundOnly[i])):
+			blackSpace = np.where(blackAndWhiteForegroundOnly[i][j] == 0)
+			blackSpace = blackSpace[0]
+			for k in blackSpace:
+				fgColorList[i][j][k] = 0
+		if i == 0:
+			continue
+		out.write(fgColorList[i])
+		
+	out.release()
+	
+	#Now we have generated a video where only the foreground is colored, now we can move onto creating an image of only the background.
+	
+	recolorizedGrayFG = grayFrameList
+	recolorizedColorFG = colorFrameList
+	
+	print "***Beginning process of finding background aggregate***"
 
 	#This is where we make the list of all the frames, with the foreground removed.
+	#This for loop for blacking out all moving parts in the colored video, so that we can create our aggregate and final background in the future.
 	for i in range(len(recolorizedGrayFG)):
-		print "Recolorizing Frame:", i
+		print "Blacking out foreground from frame {} of {}{}".format(i, vidName, extension)
 		for j in range(len(recolorizedGrayFG[i])):
 			foreground = np.where(fgGrayList[i][j] > 0)
 			for k in foreground:
-				recolorizedColorFG[i][j][k] = 0
-				recolorizedGrayFG[i][j][k] = 0
+				recolorizedGrayFG[i][j][k] = 0	
+				recolorizedColorFG[i][j][k] = 0	
 				
-	'''
-	showFrame("Recolorize Attempt", recolorizedGrayFG[4])
-	showFrame("Re2", recolorizedGrayFG[5])
-	cv2.waitKey(0)
-	cv2.destroyAllWindows()
-	'''
-				
-				
+	print "***Beginning process of creating background aggregate***"
 				
 	#Now we have a foreground of both the color and gray, we can try to get a full background!
 	firstColorFrame = recolorizedColorFG[1]
 	firstGrayFrame = recolorizedGrayFG[1]
 	blackenedPixels = {}
 	
-	print "Adding all of First Frame's Pixels"
+	#This for loop goes through our first frame, because it is being considered outside the rest of the video, and adds all the already blackened pixels to a
+	#dictionary of pixels that do not need to be relooked at.
+	
+	print "Adding frame 1 to {}-backAgg.jpeg".format(vidName)
 	for i in range(len(firstGrayFrame)):
 		for j in range(len(firstGrayFrame[i])):
 			if firstGrayFrame[i][j] == 0:
-				print "FF: Added [{}, {}, {}]".format("1", i, j)
+				#print "FF: Added [{}, {}, {}]".format("1", i, j)
 				blackenedPixels["1, {}, {}".format(i, j)] = True
 	
-	print "Adding all other pixels"
+	#print "Adding all other pixels"
 	
+	#This for loop goes through, and finds all other black pixels in all other pictures in the video, and adds them to the dictionary, and if they are not already
+	#added makes the corresponding pixel in the first frame black as well.
 	for i in range(2, len(recolorizedGrayFG)):
-		print "On Frame {}".format(i)
+		print "Adding frame {} to {}-backAgg.jpeg".format(i, vidName)
 		
 		for j in range(len(recolorizedGrayFG[i])):
 			#print "Frame: {}, row: {}".format(i, j)
@@ -384,19 +398,16 @@ def robustBackgroundFinder(vidName):
 					firstGrayFrame[j][k] = 0
 					firstColorFrame[j][k] = 0
 					
-	
-	'''
-	showFrame("wut", firstGrayFrame)
-	cv2.imwrite("backgroundAttempt.jpeg", firstGrayFrame)
-	
-	cv2.waitKey(0)
-	cv2.destroyAllWindows()
-	'''
+	#we then generate a picture with all the pixels in any frame that are black, all superimposed on the first frame.
+	cv2.imwrite("{}-backAgg.jpeg".format(vidName), firstGrayFrame)
 	
 	onlyBackground = firstGrayFrame
 	
-	secondAttempt = firstGrayFrame
+	print "***Beginning process of creating our final background image***"
 	
+	#Now we have an aggregate of all the black pixels, and we can use that to generate our final background.
+	#To do that, we average all other pixels that aren't black in every position where there is black in our aggregate.  We then replace the black pixel with the 
+	#averaged pixel value!
 	for i in range(len(firstGrayFrame)):
 		blackSpaceInRow = np.where(firstGrayFrame[i] == 0)
 		for pixel in blackSpaceInRow[0]:
@@ -416,45 +427,24 @@ def robustBackgroundFinder(vidName):
 				
 			#print "Changing Pixel: [{}, {}] from {} to {}".format(i, pixel, onlyBackground[i][pixel], averagedPixel / counter)
 			onlyBackground[i][pixel] = averagedPixel / counter
-				
-			pixelList = np.array(pixelList)
-			pixSTD = np.std(pixelList)
-			pixMax = np.amax(pixelList)
-			print pixSTD, pixMax
-			
-			secondAvg = 0
-			secondCounter = 0
-			
-			for i in range(len(pixelList)):
-				if pixelList[i] < (pixMax - (3 * pixSTD)):
-					print "Max: {}, STD: {}, Diff: {}, Current Pixel: {}".format(pixMax, pixSTD, (pixMax - pixSTD), pixelList[i])
-					continue
-					
-				print "Adding pixel"
-				secondAvg += pixelList[i]
-				secondCounter += 1
-				
-			if secondCounter == 0:
-				continue
-				
-			secondAttempt[i][pixel] = secondAvg / secondCounter
-			
-			
 		
-	#showFrame("Hopefully This Works", onlyBackground)
-	cv2.imwrite("SecondAttempt.jpeg", secondAttempt)
-	#cv2.imwrite("OnlyBackground.jpeg", onlyBackground)
-	
-	cv2.waitKey(0)
-	cv2.destroyAllWindows()
-		
+	cv2.imwrite("{}-onlyBack.jpeg".format(vidName), onlyBackground)
 		
 	cap.release()
 	
-	return colorFrameList, grayFrameList, fgColorList, fgGrayList, bgColorList, bgGrayList
+	return colorFrameList, grayFrameList, fgColorList, blackBackground
 
 		
 		
+	
+
+def edgeDetector(imageName, extension):
+	fullImg = imageName + extension
+	
+	img = cv2.imread(fullImg, 0)
+	edges = cv2.Canny(img,100,200)
+	
+	cv2.imwrite("{}-Edges.jpeg".format(imageName), edges)
 	
 
 def main():
@@ -474,7 +464,7 @@ def main():
 	
 	#internetBackgroundImage("Hitter3-1.mp4", .8)
 	
-	fl, gfl, fgcl, fggl, bgcl, bggl = robustBackgroundFinder("Hitter3-1.mp4")
+	fl, gfl, fgcl, fggl, bgcl, bggl = robustBackgroundFinder("Hitter2-3", ".mp4")
 	
 	#showAllFrames("Video", fl)
 	#showAllFrames("Gray Video", gfl)
@@ -482,6 +472,8 @@ def main():
 	#showAllFrames("Foreground of Gray", fggl)
 	#showAllFrames("Background of Color", bgcl)
 	#showAllFrames("Background of Gray", bggl)
+	
+	#edgeDetector("5-1-bkOne", ".jpeg")
 	
 	
 	
