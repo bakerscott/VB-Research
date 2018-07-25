@@ -432,11 +432,7 @@ def robustBackgroundFinder(vidName, extension):
 		
 	cap.release()
 	
-	return colorFrameList, grayFrameList, fgColorList, blackBackground
-
-		
-		
-	
+	return colorFrameList, grayFrameList, fgColorList, blackAndWhiteForegroundOnly
 
 def edgeDetector(imageName, extension):
 	fullImg = imageName + extension
@@ -464,7 +460,7 @@ def main():
 	
 	#internetBackgroundImage("Hitter3-1.mp4", .8)
 	
-	fl, gfl, fgcl, fggl, bgcl, bggl = robustBackgroundFinder("Hitter2-3", ".mp4")
+	fl, gfl, fgcl, fggl, bgcl, bggl = robustBackgroundFinder("Hitter4-5", ".mp4")
 	
 	#showAllFrames("Video", fl)
 	#showAllFrames("Gray Video", gfl)
