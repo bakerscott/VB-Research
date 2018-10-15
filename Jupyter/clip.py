@@ -10,8 +10,9 @@ class Clip:
     
     def __init__(self, filePath):
         # constructor, initilization
+        print("here")
         self.cap = cv2.VideoCapture(filePath)
-        
+        print("made the videocapture")
         
      
         
@@ -20,10 +21,13 @@ class Clip:
         self.frames = [] # this is the array of frames, might need to consider another data structure
         self.success, self.image = self.cap.read()
         self.count = 0
+        print("init self count:",self.count)
         self.success = True
+        print("init self success:",self.success)
         while self.success:
             self.success, self.image = self.cap.read()
-#             print('Read a new frame',self.success)
+#             plt.imshow(self.image)
+            print('Read a new frame',self.success)
             self.temp = stillFrame.StillFrame(self.image)
             self.frames.append(self.temp)
             self.count += 1

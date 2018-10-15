@@ -12,10 +12,12 @@ class StillFrame:
 #     Initialization
     def __init__(self,iImage):
         self.image = iImage
+        print("init a frame")
 #         self.image = cv2.cvtColor(self.image,cv2.COLOR_BGR2RGB)
         
 #     Converting a color of a single frame
 #     CAREFUL: make sure you are dealing with the correct type!
+
     def convertColor(self):
         self.image = cv2.cvtColor(self.image,cv2.COLOR_BGR2RGB)
         return self.image
